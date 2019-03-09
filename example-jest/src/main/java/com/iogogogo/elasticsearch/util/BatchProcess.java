@@ -1,4 +1,4 @@
-package com.iogogog.elasticsearch.util;
+package com.iogogogo.elasticsearch.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

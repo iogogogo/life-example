@@ -1,7 +1,7 @@
-package com.iogogog.elasticsearch.impl;
+package com.iogogogo.elasticsearch.impl;
 
 import com.google.gson.JsonObject;
-import com.iogogog.elasticsearch.ElasticsearchService;
+import com.iogogogo.elasticsearch.ElasticsearchService;
 import io.searchbox.action.Action;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
@@ -35,8 +35,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
 
     @Override
     public JestResult createIndex(String index, Settings.Builder builder) throws IOException {
-        Action<JestResult> action = buildCreateIndexAction(index, builder);
-        return jestClient.execute(action);
+        return jestClient.execute(buildCreateIndexAction(index, builder));
     }
 
     @Override

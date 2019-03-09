@@ -1,4 +1,4 @@
-package com.iogogog.elasticsearch;
+package com.iogogogo.elasticsearch;
 
 import io.searchbox.action.Action;
 import io.searchbox.client.JestResult;

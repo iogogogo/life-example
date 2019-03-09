@@ -1,7 +1,7 @@
-package com.iogogog;
+package com.iogogogo;
 
-import com.iogogog.elasticsearch.ElasticsearchService;
-import com.iogogog.elasticsearch.util.BatchProcess;
+import com.iogogogo.elasticsearch.ElasticsearchService;
+import com.iogogogo.elasticsearch.util.BatchProcess;
 import io.searchbox.client.JestResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
