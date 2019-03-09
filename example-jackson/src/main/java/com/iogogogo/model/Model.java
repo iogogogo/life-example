@@ -1,4 +1,4 @@
-package com.example.model;
+package com.iogogogo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
-package com.example;
+package com.iogogogo;
 
-import com.example.model.Model;
+import com.iogogogo.model.Model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.extern.slf4j.Slf4j;

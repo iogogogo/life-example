@@ -1,15 +1,13 @@
-package com.example;
+package com.iogogogo;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
-@Slf4j
 @SpringBootApplication
-public class LogbackApplication {
+public class DateTimeApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LogbackApplication.class, args);
+        SpringApplication.run(DateTimeApplication.class, args);
     }
+
 }

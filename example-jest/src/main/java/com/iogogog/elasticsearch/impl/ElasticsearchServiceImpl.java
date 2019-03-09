@@ -1,6 +1,5 @@
 package com.iogogog.elasticsearch.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
 import com.iogogog.elasticsearch.ElasticsearchService;
 import io.searchbox.action.Action;
@@ -16,7 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created by tao.zeng on 2019-03-08.
@@ -69,12 +69,40 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
     }
 
     @Override
-    public JestResult createMapping(String index, String type, JSONObject mapping) throws IOException {
+    public JestResult indicesExists(String index) throws IOException {
+        return jestClient.execute(buildIndicesExists(index));
+    }
+
+    @Override
+    public void indicesExistsAsync(String index, ActionListener actionListener) {
+        jestClient.executeAsync(buildIndicesExists(index), new JestResultHandler<JestResult>() {
+            @Override
+            public void completed(JestResult jestResult) {
+                if (actionListener != null) {
+                    actionListener.onSuccessful(ACTION_INDICES_EXISTS, jestResult);
+                } else {
+                    log.debug("indicesExistsAsync:{} 结果: {}  errorMessage: {}", index, jestResult.isSucceeded(), jestResult.getErrorMessage());
+                }
+            }
+
+            @Override
+            public void failed(Exception e) {
+                if (actionListener != null) {
+                    actionListener.onFailure(ACTION_INDICES_EXISTS, e);
+                } else {
+                    log.error("indicesExistsAsync:{} 异常. {}", index, e);
+                }
+            }
+        });
+    }
+
+    @Override
+    public JestResult createMapping(String index, String type, Map<String, Map<String, Object>> mapping) throws IOException {
         return jestClient.execute(buildCreateMapping(index, type, mapping));
     }
 
     @Override
-    public void createMappingAsync(String index, String type, JSONObject mapping, ActionListener actionListener) {
+    public void createMappingAsync(String index, String type, Map<String, Map<String, Object>> mapping, ActionListener actionListener) {
         jestClient.executeAsync(buildCreateMapping(index, type, mapping), new JestResultHandler<JestResult>() {
             @Override
             public void completed(JestResult jestResult) {
@@ -193,12 +221,12 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
 
 
     @Override
-    public JestResult batchSave(String index, String type, String id, List<?> data) throws IOException {
+    public JestResult batchSave(String index, String type, String id, Collection<?> data) throws IOException {
         return jestClient.execute(buildBatchSave(index, type, id, data));
     }
 
     @Override
-    public void batchSaveAsync(String index, String type, String id, List<?> data, ActionListener actionListener) {
+    public void batchSaveAsync(String index, String type, String id, Collection<?> data, ActionListener actionListener) {
         jestClient.executeAsync(buildBatchSave(index, type, id, data), new JestResultHandler<BulkResult>() {
             @Override
             public void completed(BulkResult bulkResult) {

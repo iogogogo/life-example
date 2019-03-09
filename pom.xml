@@ -20,7 +20,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.example</groupId>
+    <groupId>com.iogogog</groupId>
     <artifactId>life-example</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>life-example</name>
@@ -33,23 +33,23 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <scala.version>2.11.12</scala.version>
         <scala.binary.version>2.11</scala.binary.version>
+        <jackson.version>2.9.8</jackson.version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>maven-net-cn</id>
-            <name>Maven China Mirror</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <developers>
+        <developer>
+            <name>iogogogo</name>
+            <email>tao.zeng9@gmail.com</email>
+            <url>https://github.com/iogogogo</url>
+        </developer>
+    </developers>
 
     <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-kotlin</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -61,11 +61,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -133,6 +129,12 @@
             <version>${scala.version}</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -204,5 +206,20 @@
             </plugin>
         </plugins>
     </build>
+
+
+    <repositories>
+        <repository>
+            <id>maven-net-cn</id>
+            <name>Maven China Mirror</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>

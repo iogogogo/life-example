@@ -1,6 +1,5 @@
 package com.iogogog;
 
-import com.alibaba.fastjson.JSONObject;
 import com.iogogog.elasticsearch.ElasticsearchService;
 import io.searchbox.client.JestResult;
 import lombok.AllArgsConstructor;
@@ -13,9 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by tao.zeng on 2019-03-08.
@@ -34,24 +31,33 @@ public class JestApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
+        Map<String, Map<String, Object>> mapping = new HashMap<>(16);
+
         String index = "test_001";
         List<Model> list = new ArrayList<>();
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 30000; i++) {
             list.add(new Model("小花脸 — " + UUID.randomUUID().toString()));
         }
         try {
 
-            JestResult result = elasticsearchService.deleteIndex(index);
+            JestResult result = elasticsearchService.indicesExists(index);
+            log.info("indicesExists:{}", result.isSucceeded());
+
+            result = elasticsearchService.deleteIndex(index);
             log.info("deleteIndex:{}", result.isSucceeded());
+
+            result = elasticsearchService.indicesExists(index);
+            log.info("indicesExists:{}", result.isSucceeded());
 
             result = elasticsearchService.createIndex(index);
             log.info("createIndex:{}", result.isSucceeded());
 
 
-            JSONObject mapping = new JSONObject().fluentPut("properties",
-                    new JSONObject().fluentPut("name", "text"));
-            result = elasticsearchService.createMapping(index, "test", mapping);
-            log.info("createMapping:{}", result.isSucceeded());
+            Map<String, Object> properties = new HashMap<>(16);
+            properties.put("name", "text");
+            mapping.put("properties", properties);
+
+            elasticsearchService.createMappingAsync(index, "test", mapping, null);
 
             result = elasticsearchService.save(index, "test", String.valueOf(1024), new Model("小花脸"));
             log.info("save:{}", result.isSucceeded());

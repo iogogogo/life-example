@@ -1,10 +1,13 @@
-package com.example;
+package com.iogogogo;
 
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import java.io.IOException;
 
+/**
+ * Created by tao.zeng on 2019-03-09.
+ */
 @Slf4j
 public class WsClient {
 

@@ -1,4 +1,4 @@
-package com.example;
+package com.iogogogo.util;
 
 public interface DateTimePattern {
 

@@ -1,4 +1,4 @@
-package com.example;
+package com.iogogogo.util;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.example.DateTimePattern.*;
+import static com.iogogogo.util.DateTimePattern.*;
 
 public class Java8DateTimeUtils {
 

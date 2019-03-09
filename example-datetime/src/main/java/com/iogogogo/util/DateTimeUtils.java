@@ -1,4 +1,4 @@
-package com.example;
+package com.iogogogo.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.example.DateTimePattern.*;
+import static com.iogogogo.util.DateTimePattern.*;
 
 public class DateTimeUtils {
 

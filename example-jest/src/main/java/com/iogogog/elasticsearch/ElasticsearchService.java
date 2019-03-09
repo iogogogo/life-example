@@ -1,6 +1,5 @@
 package com.iogogog.elasticsearch;
 
-import com.alibaba.fastjson.JSONObject;
 import io.searchbox.action.Action;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Bulk;
@@ -8,12 +7,15 @@ import io.searchbox.core.Delete;
 import io.searchbox.core.Index;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.DeleteIndex;
+import io.searchbox.indices.IndicesExists;
 import io.searchbox.indices.mapping.PutMapping;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.common.settings.Settings;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
+
 
 /**
  * Created by tao.zeng on 2019-03-08.
@@ -47,9 +49,13 @@ public interface ElasticsearchService {
      */
     void createIndexAsync(String index, Settings.Builder builder, ActionListener actionListener);
 
-    JestResult createMapping(String index, String type, JSONObject jsonObject) throws IOException;
+    JestResult indicesExists(String index) throws IOException;
 
-    void createMappingAsync(String index, String type, JSONObject jsonObject, ActionListener actionListener);
+    void indicesExistsAsync(String index, ActionListener actionListener);
+
+    JestResult createMapping(String index, String type, Map<String, Map<String, Object>> mapping) throws IOException;
+
+    void createMappingAsync(String index, String type, Map<String, Map<String, Object>> mapping, ActionListener actionListener);
 
     String getMapping(String index, String type) throws IOException;
 
@@ -69,9 +75,9 @@ public interface ElasticsearchService {
     void saveAsync(String index, String type, String id, Object data, ActionListener actionListener);
 
 
-    JestResult batchSave(String index, String type, String id, List<?> data) throws IOException;
+    JestResult batchSave(String index, String type, String id, Collection<?> data) throws IOException;
 
-    void batchSaveAsync(String index, String type, String id, List<?> data, ActionListener actionListener);
+    void batchSaveAsync(String index, String type, String id, Collection<?> data, ActionListener actionListener);
 
 
     default Action<JestResult> buildCreateIndexAction(String index, Settings.Builder builder) {
@@ -87,7 +93,7 @@ public interface ElasticsearchService {
         return action;
     }
 
-    default PutMapping buildCreateMapping(String index, String type, JSONObject mapping) {
+    default PutMapping buildCreateMapping(String index, String type, Map<String, Map<String, Object>> mapping) {
         return new PutMapping.Builder(index, type, mapping).build();
     }
 
@@ -116,10 +122,14 @@ public interface ElasticsearchService {
         return builder.build();
     }
 
-    default Bulk buildBatchSave(String index, String type, String id, List<?> data) {
+    default Bulk buildBatchSave(String index, String type, String id, Collection<?> data) {
         Bulk.Builder builder = new Bulk.Builder();
         data.forEach(x -> builder.addAction(buildSave(index, type, id, x)));
         return builder.build();
+    }
+
+    default IndicesExists buildIndicesExists(String index) {
+        return new IndicesExists.Builder(index).build();
     }
 
     /**
@@ -149,5 +159,7 @@ public interface ElasticsearchService {
         String ACTION_SAVE_ASYNC = "save_async";
 
         String ACTION_BATCH_SAVE_ASYNC = "batch_save_async";
+
+        String ACTION_INDICES_EXISTS = "action_indices_exists";
     }
 }
