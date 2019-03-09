@@ -22,6 +22,11 @@ import java.util.Map;
  */
 public interface ElasticsearchService {
 
+    /**
+     * @param index
+     * @return
+     * @throws IOException
+     */
     JestResult createIndex(String index) throws IOException;
 
     /**
@@ -81,16 +86,11 @@ public interface ElasticsearchService {
 
 
     default Action<JestResult> buildCreateIndexAction(String index, Settings.Builder builder) {
-        CreateIndex action;
-        if (builder == null) {
-            action = new CreateIndex.Builder(index)
-                    .build();
-        } else {
-            action = new CreateIndex.Builder(index)
-                    .settings(builder.build().getAsMap())
-                    .build();
+        CreateIndex.Builder build = new CreateIndex.Builder(index);
+        if (builder != null) {
+            build.settings(builder.build().getAsMap());
         }
-        return action;
+        return build.build();
     }
 
     default PutMapping buildCreateMapping(String index, String type, Map<String, Map<String, Object>> mapping) {
@@ -109,7 +109,7 @@ public interface ElasticsearchService {
                 .build();
     }
 
-    default Index buildSave(String index, String type, String id, Object data) {
+    default Index buildItemSave(String index, String type, String id, Object data) {
         Index.Builder builder = new Index.Builder(data)
                 .index(index)
                 .type(type)
@@ -124,7 +124,7 @@ public interface ElasticsearchService {
 
     default Bulk buildBatchSave(String index, String type, String id, Collection<?> data) {
         Bulk.Builder builder = new Bulk.Builder();
-        data.forEach(x -> builder.addAction(buildSave(index, type, id, x)));
+        data.forEach(x -> builder.addAction(buildItemSave(index, type, id, x)));
         return builder.build();
     }
 
@@ -137,7 +137,7 @@ public interface ElasticsearchService {
      */
     interface ActionListener {
 
-        void onSuccessful(String action, JestResult result);
+        void onCompleted(String action, JestResult result);
 
         void onFailure(String action, Exception e);
     }

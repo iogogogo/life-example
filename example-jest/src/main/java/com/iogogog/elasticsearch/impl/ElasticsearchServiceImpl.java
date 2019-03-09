@@ -51,7 +51,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
             @Override
             public void completed(JestResult jestResult) {
                 if (actionListener != null) {
-                    actionListener.onSuccessful(ACTION_CREATE_INDEX_ASYNC, jestResult);
+                    actionListener.onCompleted(ACTION_CREATE_INDEX_ASYNC, jestResult);
                 } else {
                     log.debug("创建index:{} 结果: {}  errorMessage: {}", index, jestResult.isSucceeded(), jestResult.getErrorMessage());
                 }
@@ -79,7 +79,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
             @Override
             public void completed(JestResult jestResult) {
                 if (actionListener != null) {
-                    actionListener.onSuccessful(ACTION_INDICES_EXISTS, jestResult);
+                    actionListener.onCompleted(ACTION_INDICES_EXISTS, jestResult);
                 } else {
                     log.debug("indicesExistsAsync:{} 结果: {}  errorMessage: {}", index, jestResult.isSucceeded(), jestResult.getErrorMessage());
                 }
@@ -107,7 +107,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
             @Override
             public void completed(JestResult jestResult) {
                 if (actionListener != null) {
-                    actionListener.onSuccessful(ACTION_CREATE_MAPPING_ASYNC, jestResult);
+                    actionListener.onCompleted(ACTION_CREATE_MAPPING_ASYNC, jestResult);
                 } else {
                     log.debug("createMappingAsync:{} 结果: {}  errorMessage: {}", index, jestResult.isSucceeded(), jestResult.getErrorMessage());
                 }
@@ -144,7 +144,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
             @Override
             public void completed(JestResult jestResult) {
                 if (actionListener != null) {
-                    actionListener.onSuccessful(ACTION_DELETE_INDEX_ASYNC, jestResult);
+                    actionListener.onCompleted(ACTION_DELETE_INDEX_ASYNC, jestResult);
                 } else {
                     log.debug("deleteIndexAsync:{} 结果: {}  errorMessage: {}", index, jestResult.isSucceeded(), jestResult.getErrorMessage());
                 }
@@ -174,7 +174,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
             @Override
             public void completed(DocumentResult documentResult) {
                 if (actionListener != null) {
-                    actionListener.onSuccessful(ACTION_DELETE_BY_ID_ASYNC, documentResult);
+                    actionListener.onCompleted(ACTION_DELETE_BY_ID_ASYNC, documentResult);
                 } else {
                     log.debug("deleteByIdAsync:{} 结果: {}  errorMessage: {}", index, documentResult.isSucceeded(), documentResult.getErrorMessage());
                 }
@@ -193,16 +193,16 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
 
     @Override
     public JestResult save(String index, String type, String id, Object data) throws IOException {
-        return jestClient.execute(buildSave(index, type, id, data));
+        return jestClient.execute(buildItemSave(index, type, id, data));
     }
 
     @Override
     public void saveAsync(String index, String type, String id, Object data, ActionListener actionListener) {
-        jestClient.executeAsync(buildSave(index, type, id, data), new JestResultHandler<DocumentResult>() {
+        jestClient.executeAsync(buildItemSave(index, type, id, data), new JestResultHandler<DocumentResult>() {
             @Override
             public void completed(DocumentResult documentResult) {
                 if (actionListener != null) {
-                    actionListener.onSuccessful(ACTION_SAVE_ASYNC, documentResult);
+                    actionListener.onCompleted(ACTION_SAVE_ASYNC, documentResult);
                 } else {
                     log.debug("saveAsync:{} 结果: {}  errorMessage: {}", index, documentResult.isSucceeded(), documentResult.getErrorMessage());
                 }
@@ -231,7 +231,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
             @Override
             public void completed(BulkResult bulkResult) {
                 if (actionListener != null) {
-                    actionListener.onSuccessful(ACTION_BATCH_SAVE_ASYNC, bulkResult);
+                    actionListener.onCompleted(ACTION_BATCH_SAVE_ASYNC, bulkResult);
                 } else {
                     log.debug("batchSaveAsync:{} 结果: {}  errorMessage: {}", index, bulkResult.isSucceeded(), bulkResult.getErrorMessage());
                 }
