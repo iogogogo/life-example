@@ -14,7 +14,6 @@ import org.elasticsearch.common.settings.Settings;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Map;
 
 
 /**
@@ -58,9 +57,9 @@ public interface ElasticsearchService {
 
     void indicesExistsAsync(String index, ActionListener actionListener);
 
-    JestResult createMapping(String index, String type, Map<String, Map<String, Object>> mapping) throws IOException;
+    JestResult createMapping(String index, String type, String mapping) throws IOException;
 
-    void createMappingAsync(String index, String type, Map<String, Map<String, Object>> mapping, ActionListener actionListener);
+    void createMappingAsync(String index, String type, String mapping, ActionListener actionListener);
 
     String getMapping(String index, String type) throws IOException;
 
@@ -93,7 +92,7 @@ public interface ElasticsearchService {
         return build.build();
     }
 
-    default PutMapping buildCreateMapping(String index, String type, Map<String, Map<String, Object>> mapping) {
+    default PutMapping buildCreateMapping(String index, String type, String mapping) {
         return new PutMapping.Builder(index, type, mapping).build();
     }
 

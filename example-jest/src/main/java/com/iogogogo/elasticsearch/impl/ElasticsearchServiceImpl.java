@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * Created by tao.zeng on 2019-03-08.
@@ -96,12 +95,12 @@ public class ElasticsearchServiceImpl implements ElasticsearchService, Elasticse
     }
 
     @Override
-    public JestResult createMapping(String index, String type, Map<String, Map<String, Object>> mapping) throws IOException {
+    public JestResult createMapping(String index, String type, String mapping) throws IOException {
         return jestClient.execute(buildCreateMapping(index, type, mapping));
     }
 
     @Override
-    public void createMappingAsync(String index, String type, Map<String, Map<String, Object>> mapping, ActionListener actionListener) {
+    public void createMappingAsync(String index, String type, String mapping, ActionListener actionListener) {
         jestClient.executeAsync(buildCreateMapping(index, type, mapping), new JestResultHandler<JestResult>() {
             @Override
             public void completed(JestResult jestResult) {

@@ -1,7 +1,8 @@
 package com.iogogogo;
 
 import com.iogogogo.elasticsearch.ElasticsearchService;
-import com.iogogogo.elasticsearch.util.BatchProcess;
+import com.iogogogo.util.BatchProcess;
+import com.iogogogo.util.JsonParse;
 import io.searchbox.client.JestResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,9 @@ import java.util.*;
 @SpringBootApplication
 public class JestApplication implements CommandLineRunner {
 
+    private final static String INDEX = "test_002";
+    private final static String TYPE = "model";
+
     @Autowired
     private ElasticsearchService elasticsearchService;
 
@@ -29,51 +33,47 @@ public class JestApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws Exception {
 
-        Map<String, Map<String, Object>> mapping = new HashMap<>(16);
-
-        String index = "test_001";
         List<Model> list = new ArrayList<>();
-        for (int i = 0; i < 700009; i++) {
+
+        for (int i = 0; i < 1000; i++) {
             list.add(new Model("小花脸 — " + UUID.randomUUID().toString()));
         }
-        try {
 
-            JestResult result = elasticsearchService.indicesExists(index);
-            log.info("indicesExists:{}", result.isSucceeded());
+        JestResult result = elasticsearchService.indicesExists(INDEX);
+        log.info("indicesExists:{}", result.isSucceeded());
 
-            result = elasticsearchService.deleteIndex(index);
-            log.info("deleteIndex:{}", result.isSucceeded());
+        result = elasticsearchService.deleteIndex(INDEX);
+        log.info("deleteIndex:{}", result.isSucceeded());
 
-            result = elasticsearchService.indicesExists(index);
-            log.info("indicesExists:{}", result.isSucceeded());
+        Map<String, Map<String, Map<String, Map<String, Object>>>> mapping = new HashMap<>();
+        Map<String, Map<String, Map<String, Object>>> properties = new HashMap<>();
 
-            result = elasticsearchService.createIndex(index);
-            log.info("createIndex:{}", result.isSucceeded());
+        Map<String, Map<String, Object>> fields = new HashMap<>();
+        Map<String, Object> mapper = new HashMap<>();
+        mapper.put("type", "string");
+        mapper.put("store", "yes");
+        fields.put("name", mapper);
+
+        mapper = new HashMap<>();
+        mapper.put("type", "integer");
+        fields.put("age", mapper);
+
+        properties.put("properties", fields);
+        mapping.put(TYPE, properties);
 
 
-            Map<String, Object> properties = new HashMap<>(16);
-            properties.put("name", "text");
-            mapping.put("properties", properties);
+        elasticsearchService.createMappingAsync(INDEX, TYPE, JsonParse.toJson(mapping), null);
 
-            elasticsearchService.createMappingAsync(index, "test", mapping, null);
-
-            result = elasticsearchService.save(index, "test", String.valueOf(1024), new Model("小花脸"));
-            log.info("save:{}", result.isSucceeded());
-
-            BatchProcess.process(list, 50000, data -> {
-
-                elasticsearchService.batchSaveAsync(index, "test", null, data, null);
-
-//                JestResult jestResult = elasticsearchService.batchSave(index, "test", null, data);
-//                log.info("batchSave:{}", jestResult.isSucceeded());
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        result = elasticsearchService.createIndex(INDEX);
+        log.info("createIndex:{}", result.isSucceeded());
+        Model model = new Model("小花脸");
+        elasticsearchService.saveAsync(INDEX, TYPE, null, model, null);
+        BatchProcess.process(list, 500,
+                x -> elasticsearchService.batchSaveAsync(INDEX, TYPE, null, x, null));
     }
+
 
     @Data
     @NoArgsConstructor
@@ -81,4 +81,5 @@ public class JestApplication implements CommandLineRunner {
     class Model {
         String name;
     }
+
 }
