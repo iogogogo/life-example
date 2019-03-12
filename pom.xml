@@ -11,6 +11,7 @@
         <module>example-script-log</module>
         <module>example-datetime</module>
         <module>example-jest</module>
+        <module>example-vertica</module>
     </modules>
 
     <parent>
@@ -207,8 +208,21 @@
         </plugins>
     </build>
 
-
+    <!-- sso repository config -->
     <repositories>
+        <repository>
+            <id>maven-central</id>
+            <name>eoi-group</name>
+            <url>http://192.168.31.230:18081/repository/eoi-group/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+
         <repository>
             <id>maven-net-cn</id>
             <name>Maven China Mirror</name>
@@ -221,5 +235,4 @@
             </snapshots>
         </repository>
     </repositories>
-
 </project>

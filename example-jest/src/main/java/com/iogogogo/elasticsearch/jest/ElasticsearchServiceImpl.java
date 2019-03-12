@@ -1,4 +1,4 @@
-package com.iogogogo.elasticsearch.impl;
+package com.iogogogo.elasticsearch.jest;
 
 import com.google.gson.JsonObject;
 import com.iogogogo.elasticsearch.ElasticsearchService;
