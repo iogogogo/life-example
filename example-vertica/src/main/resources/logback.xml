@@ -149,6 +149,9 @@
     level：日志打印级别
     -->
     <logger name="com.zaxxer.hikari" level="WARN"/>
+    <logger name="ch.qos.logback" level="WARN"/>
+    <logger name="ch.qos.logback.classic.joran.action" level="WARN"/>
+    <logger name="ch.qos.logback.core.joran.action" level="WARN"/>
     <logger name="org.apache.ibatis.logging" level="WARN"/>
 
     <root level="INFO">  <!-- Options: ERROR, WARN, INFO, DEBUG -->

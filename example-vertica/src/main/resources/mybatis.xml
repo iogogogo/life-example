@@ -15,7 +15,7 @@
         默认是将该类的名称首字母小写，也可以使用@Alias 注解自定义
         也可以使用 typeAlias 单一指定 -->
     <typeAliases>
-        <!--<package name="com.zz.mybatis.entity"/>-->
+        <package name="com.iogogogo.vertica.entity"/>
     </typeAliases>
 
 
@@ -35,8 +35,7 @@
 
     <!-- mapper 接口所在的包，mybatis会自动扫描查找 也可以使用 mapper 单独指定 -->
     <mappers>
-        <!--<package name="com.zz.mybatis.mapper"/>-->
-        <!--<package name="com.zz.mybatis.mapper2"/>-->
+        <package name="com.iogogogo.vertica.mapper"/>
     </mappers>
 
 </configuration>

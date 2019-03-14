@@ -1,5 +1,7 @@
 package com.iogogogo.vertica;
 
+import com.iogogogo.vertica.entity.UserEntity;
+import com.iogogogo.vertica.mapper.UserMapper;
 import com.iogogogo.vertica.persistent.SqlSessionFactoryHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
@@ -21,6 +23,11 @@ public class VerticaApplication {
 
         SqlSession session = SqlSessionFactoryHelper.openSqlSession();
         log.info("session:{}", session);
+
+        UserMapper userMapper = session.getMapper(UserMapper.class);
+        boolean b = userMapper.save(new UserEntity(2051L, "小花脸", "这是关于小花脸的描述啊"));
+        log.info("b:{}", b);
+        session.commit();
 
     }
 }
