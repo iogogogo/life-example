@@ -3,6 +3,7 @@ package com.iogogogo.vertica.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * Created by tao.zeng on 2019-03-13.
  */
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity implements Serializable {

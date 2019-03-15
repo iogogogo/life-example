@@ -25,9 +25,12 @@ public class VerticaApplication {
         log.info("session:{}", session);
 
         UserMapper userMapper = session.getMapper(UserMapper.class);
-        boolean b = userMapper.save(new UserEntity(2051L, "小花脸", "这是关于小花脸的描述啊"));
+        boolean b = userMapper.save(new UserEntity(2052L, "哈哈哈哈", "灌灌灌灌或或或或"));
         log.info("b:{}", b);
         session.commit();
+
+        userMapper.findAll().forEach(x -> log.info(x.toString()));
+
 
     }
 }
