@@ -4,11 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <modules>
-        <module>example-jackson</module>
-        <module>example-logback</module>
         <module>example-soap</module>
-        <module>example-ws</module>
-        <module>example-script-log</module>
         <module>example-datetime</module>
         <module>example-jest</module>
         <module>example-vertica</module>
@@ -70,17 +66,6 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>3.13.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>okio</artifactId>
-                    <groupId>com.squareup.okio</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup.okio</groupId>
-            <artifactId>okio</artifactId>
-            <version>2.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

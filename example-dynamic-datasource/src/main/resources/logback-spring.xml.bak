@@ -148,12 +148,8 @@
     level：日志打印级别
     -->
     <logger name="com.zaxxer.hikari" level="WARN"/>
-    <!-- 数据库中没有主键ID  启动会有warn日志 设置为error关闭 warn 日志 -->
-    <logger name="com.baomidou.mybatisplus.core.toolkit.TableInfoHelper" level="ERROR"/>
-    <!-- 脚本日志匹配、梳理表、CMDB数据匹配是会产生大量debug日志 用来记录匹配过程 -->
-    <logger name="com.sharplook.boclog.biz.logger.FtpOperator" level="DEBUG"/>
     <!-- 打印sql 配置 如需打印 设置为debug -->
-    <logger name="com.sharplook.boclog.mapper" level="INFO"/>
+    <logger name="com.iogogogo.vertica.mapper" level="INFO"/>
 
     <root level="INFO">  <!-- Options: ERROR, WARN, INFO, DEBUG -->
         <appender-ref ref="STDOUT"/>
