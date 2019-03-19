@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: example-dynamic-datasource
+  datasource:
+    mysql:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      hikari:
+        auto-commit: true
+        connection-test-query: SELECT 1
+        connection-timeout: 30000
+        idle-timeout: 30000
+        max-lifetime: 1800000
+        maximum-pool-size: 15
+        minimum-idle: 5
+        pool-name: MySQLHikariCP
+      password: Root@123
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:mysql://192.168.21.111:3306/life-test?characterEncoding=utf8&useSSL=false
+      username: root
+    vertica:
+      driver-class-name: com.vertica.jdbc.Driver
+      hikari:
+        auto-commit: true
+        connection-test-query: SELECT 1
+        connection-timeout: 30000
+        idle-timeout: 30000
+        max-lifetime: 1800000
+        maximum-pool-size: 15
+        minimum-idle: 5
+        pool-name: VerticaHikariCP
+      password: 123456
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:vertica://192.168.21.188:5433/vertica20190122001
+      username: dbadmin
+
+logging:
+  home: ${user.dir}/logs
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.iogogogo.entity

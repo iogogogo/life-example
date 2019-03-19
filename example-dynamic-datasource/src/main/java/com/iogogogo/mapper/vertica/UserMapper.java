@@ -1,7 +1,7 @@
-package com.iogogogo.vertica.mapper;
+package com.iogogogo.mapper.vertica;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.iogogogo.vertica.entity.User;
+import com.iogogogo.entity.User;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +12,6 @@ import java.util.List;
  */
 @Repository
 public interface UserMapper extends BaseMapper<User> {
-
 
     @Select("select * from public.user")
     List<User> list();

@@ -1,9 +1,9 @@
-package com.iogogogo.vertica.service.impl;
+package com.iogogogo.service.vertica.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.iogogogo.vertica.entity.User;
-import com.iogogogo.vertica.mapper.UserMapper;
-import com.iogogogo.vertica.service.UserService;
+import com.iogogogo.entity.User;
+import com.iogogogo.mapper.vertica.UserMapper;
+import com.iogogogo.service.vertica.UserService;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,4 +1,4 @@
-package com.iogogogo.vertica.entity;
+package com.iogogogo.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;

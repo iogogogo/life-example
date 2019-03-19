@@ -1,6 +1,6 @@
 package com.iogogogo.vertica.persistent;
 
-import com.iogogogo.vertica.util.IoUtils;
+import com.iogogogo.util.IoUtils;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

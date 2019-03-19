@@ -1,4 +1,4 @@
-package com.iogogogo.vertica.util;
+package com.iogogogo.util;
 
 /**
  * Created by tao.zeng on 2019-03-15.

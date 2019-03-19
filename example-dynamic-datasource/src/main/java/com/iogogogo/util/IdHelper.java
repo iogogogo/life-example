@@ -1,4 +1,4 @@
-package com.iogogogo.vertica.util;
+package com.iogogogo.util;
 
 import java.util.UUID;
 
