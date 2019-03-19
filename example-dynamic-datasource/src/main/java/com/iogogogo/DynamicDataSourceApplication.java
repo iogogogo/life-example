@@ -35,15 +35,16 @@ public class DynamicDataSourceApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
+        int i = userMapper.insert(new User(IdHelper.id(), "小花脸-" + IdHelper.uuid(), "description-" + IdHelper.uuid()));
+        // 使用自定义的查询方法
         List<User> list = userMapper.list();
-        log.info("list.size() {}", list.size());
+        log.info("insert result:{} list.size:{}", i, list.size());
+
+
         boolean b = sysUserMapper.save(new SysUser(IdHelper.id(), "小花脸-" + IdHelper.uuid(), LocalDateTime.now()));
-        log.info("insert:{}", b);
-        List<SysUser> users = sysUserMapper.list();
+        // 使用MyBatis-Plus提供的查询方法
+        List<SysUser> users = sysUserMapper.selectList(null);
+        log.info("insert result:{} list.size:{}", b, users.size());
         users.forEach(x -> log.info(x.toString()));
-
-        users =  sysUserMapper.selectList(null);
-        users.forEach(x -> log.info(x.toString()));
-
     }
 }
