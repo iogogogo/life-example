@@ -1,6 +1,8 @@
 package com.iogogogo.datasource;
 
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import com.iogogogo.datasource.configure.HikariMySQLConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -18,17 +20,39 @@ import javax.sql.DataSource;
  */
 @Configuration
 @MapperScan(basePackages = "com.iogogogo.mapper.mysql", sqlSessionTemplateRef = "mysqlSqlSessionTemplate")
-public class MySQLDataSourceConfig {
+public class MySQLDataSourceConfigure {
+
+    private HikariMySQLConfig mysqlConfig;
+
+    public MySQLDataSourceConfigure(HikariMySQLConfig mysqlConfig) {
+        this.mysqlConfig = mysqlConfig;
+    }
 
     @Bean(name = "mysqlDataSource")
     @ConfigurationProperties("spring.datasource.mysql")
     public DataSource mysql() {
-        return DataSourceBuilder.create().build();
+        DataSource dataSource = DataSourceBuilder.create().build();
+        HikariDataSource hikariDataSource = null;
+        if (dataSource instanceof HikariDataSource) {
+            // 连接池配置
+            hikariDataSource = (HikariDataSource) dataSource;
+            hikariDataSource.setPoolName(mysqlConfig.getPoolName());
+            hikariDataSource.setAutoCommit(mysqlConfig.isAutoCommit());
+            hikariDataSource.setConnectionTestQuery(mysqlConfig.getConnectionTestQuery());
+            hikariDataSource.setIdleTimeout(mysqlConfig.getIdleTimeout());
+            hikariDataSource.setConnectionTimeout(mysqlConfig.getConnectionTimeout());
+            hikariDataSource.setMaximumPoolSize(mysqlConfig.getMaximumPoolSize());
+            hikariDataSource.setMaxLifetime(mysqlConfig.getMaxLifetime());
+            hikariDataSource.setMinimumIdle(mysqlConfig.getMinimumIdle());
+        }
+        return hikariDataSource == null ? dataSource : hikariDataSource;
     }
 
     @Bean(name = "mysqlSqlSessionFactory")
     public SqlSessionFactory mysqlSqlSessionFactory(@Qualifier("mysqlDataSource") DataSource dataSource) throws Exception {
+        // MyBatis-Plus使用MybatisSqlSessionFactoryBean  MyBatis直接使用SqlSessionFactoryBean
         MybatisSqlSessionFactoryBean bean = new MybatisSqlSessionFactoryBean();
+        // 给MyBatis-Plus注入数据源
         bean.setDataSource(dataSource);
         return bean.getObject();
     }

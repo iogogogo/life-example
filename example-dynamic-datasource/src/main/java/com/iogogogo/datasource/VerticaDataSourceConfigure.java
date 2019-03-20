@@ -1,6 +1,8 @@
 package com.iogogogo.datasource;
 
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import com.iogogogo.datasource.configure.HikariVerticaConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -18,16 +20,37 @@ import javax.sql.DataSource;
  */
 @Configuration
 @MapperScan(basePackages = "com.iogogogo.mapper.vertica", sqlSessionTemplateRef = "verticaSqlSessionTemplate")
-public class VerticaDataSourceConfig {
+public class VerticaDataSourceConfigure {
+
+    private HikariVerticaConfig verticaConfig;
+
+    public VerticaDataSourceConfigure(HikariVerticaConfig verticaConfig) {
+        this.verticaConfig = verticaConfig;
+    }
 
     @Bean(name = "verticaDataSource")
     @ConfigurationProperties("spring.datasource.vertica")
     public DataSource vertica() {
-        return DataSourceBuilder.create().build();
+        DataSource dataSource = DataSourceBuilder.create().build();
+        HikariDataSource hikariDataSource = null;
+        if (dataSource instanceof HikariDataSource) {
+            // 连接池配置
+            hikariDataSource = (HikariDataSource) dataSource;
+            hikariDataSource.setPoolName(verticaConfig.getPoolName());
+            hikariDataSource.setAutoCommit(verticaConfig.isAutoCommit());
+            hikariDataSource.setConnectionTestQuery(verticaConfig.getConnectionTestQuery());
+            hikariDataSource.setIdleTimeout(verticaConfig.getIdleTimeout());
+            hikariDataSource.setConnectionTimeout(verticaConfig.getConnectionTimeout());
+            hikariDataSource.setMaximumPoolSize(verticaConfig.getMaximumPoolSize());
+            hikariDataSource.setMaxLifetime(verticaConfig.getMaxLifetime());
+            hikariDataSource.setMinimumIdle(verticaConfig.getMinimumIdle());
+        }
+        return hikariDataSource == null ? dataSource : hikariDataSource;
     }
 
     @Bean(name = "verticaSqlSessionFactory")
     public SqlSessionFactory verticaSqlSessionFactory(@Qualifier("verticaDataSource") DataSource dataSource) throws Exception {
+        // MyBatis-Plus使用MybatisSqlSessionFactoryBean  MyBatis直接使用SqlSessionFactoryBean
         MybatisSqlSessionFactoryBean bean = new MybatisSqlSessionFactoryBean();
         // 给MyBatis-Plus注入数据源
         bean.setDataSource(dataSource);
