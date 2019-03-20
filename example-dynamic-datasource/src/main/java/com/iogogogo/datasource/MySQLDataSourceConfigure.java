@@ -1,7 +1,7 @@
 package com.iogogogo.datasource;
 
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import com.iogogogo.datasource.configure.HikariMySQLConfig;
+import com.iogogogo.datasource.config.HikariMySQLConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
