@@ -35,6 +35,9 @@ public class DynamicDataSourceApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
+        userMapper.exec();
+
+
         int i = userMapper.insert(new User(IdHelper.id(), "小花脸-" + IdHelper.uuid(), "description-" + IdHelper.uuid()));
         // 使用自定义的查询方法
         List<User> list = userMapper.list();
