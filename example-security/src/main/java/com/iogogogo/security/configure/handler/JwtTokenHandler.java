@@ -1,6 +1,6 @@
 package com.iogogogo.security.configure.handler;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.iogogogo.security.entity.Role;
 import com.iogogogo.security.model.SecurityUser;
 import com.iogogogo.security.service.RoleService;
@@ -209,7 +209,7 @@ public class JwtTokenHandler implements Serializable {
         Map<String, Object> claims = generateClaims(userDetail);
         // 只授于更新 token 的权限
         String[] roles = new String[]{JwtTokenHandler.ROLE_REFRESH_TOKEN};
-        claims.put(CLAIM_KEY_AUTHORITIES, JSON.toJSON(roles));
+        claims.put(CLAIM_KEY_AUTHORITIES, new Gson().toJson(roles));
         return generateRefreshToken(userDetail.getUsername(), claims);
     }
 

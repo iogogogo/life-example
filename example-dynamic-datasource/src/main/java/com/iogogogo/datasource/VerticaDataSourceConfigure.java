@@ -32,20 +32,7 @@ public class VerticaDataSourceConfigure {
     @ConfigurationProperties("spring.datasource.vertica")
     public DataSource vertica() {
         DataSource dataSource = DataSourceBuilder.create().build();
-        HikariDataSource hikariDataSource = null;
-        if (dataSource instanceof HikariDataSource) {
-            // 连接池配置
-            hikariDataSource = (HikariDataSource) dataSource;
-            hikariDataSource.setPoolName(verticaConfig.getPoolName());
-            hikariDataSource.setAutoCommit(verticaConfig.isAutoCommit());
-            hikariDataSource.setConnectionTestQuery(verticaConfig.getConnectionTestQuery());
-            hikariDataSource.setIdleTimeout(verticaConfig.getIdleTimeout());
-            hikariDataSource.setConnectionTimeout(verticaConfig.getConnectionTimeout());
-            hikariDataSource.setMaximumPoolSize(verticaConfig.getMaximumPoolSize());
-            hikariDataSource.setMaxLifetime(verticaConfig.getMaxLifetime());
-            hikariDataSource.setMinimumIdle(verticaConfig.getMinimumIdle());
-        }
-        return hikariDataSource == null ? dataSource : hikariDataSource;
+        return verticaConfig.injection(dataSource);
     }
 
     @Bean(name = "verticaSqlSessionFactory")

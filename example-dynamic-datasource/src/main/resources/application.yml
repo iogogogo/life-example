@@ -39,3 +39,5 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
   type-aliases-package: com.iogogogo.entity
+server:
+  port: 8081

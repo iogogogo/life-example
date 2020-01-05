@@ -4,13 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>life-example</artifactId>
-        <groupId>com.iogogog</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>com.iogogogo</groupId>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>example-dynamic-datasource</artifactId>
-
 
     <dependencies>
         <dependency>
@@ -18,11 +17,10 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatisplus.spring.version}</version>
         </dependency>
-        <!-- jdbc driver -->
         <dependency>
-            <groupId>com.sharplook.vertica</groupId>
+            <groupId>com.vertica</groupId>
             <artifactId>vertica-jdbc</artifactId>
-            <version>9.2.0</version>
+            <version>9.1.1</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>

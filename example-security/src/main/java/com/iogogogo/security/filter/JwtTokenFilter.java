@@ -1,7 +1,7 @@
 package com.iogogogo.security.filter;
 
-import com.iogogogo.security.model.SecurityUser;
 import com.iogogogo.security.configure.handler.JwtTokenHandler;
+import com.iogogogo.security.model.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +42,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         if (StringUtils.isNotEmpty(authToken) && authToken.startsWith(authTokenStart)) {
             authToken = authToken.substring(authTokenStart.length());
             log.info("请求" + request.getRequestURI() + "携带的token值：" + authToken);
-            //如果在token过期之前触发接口,我们更新token过期时间，token值不变只更新过期时间
-            //获取token生成时间
+            // 如果在token过期之前触发接口,我们更新token过期时间，token值不变只更新过期时间
+            // String refreshToken = jwtTokenUtil.refreshToken(authToken);
+            // 获取token生成时间
             Date createTokenDate = jwtTokenUtil.getCreatedDateFromToken(authToken);
             log.info("createTokenDate: " + createTokenDate);
 
         } else {
-            // 不按规范,不允许通过验证
             authToken = null;
         }
         String username = jwtTokenUtil.getUsernameFromToken(authToken);

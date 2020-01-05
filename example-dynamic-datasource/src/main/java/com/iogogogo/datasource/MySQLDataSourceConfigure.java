@@ -2,7 +2,6 @@ package com.iogogogo.datasource;
 
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.iogogogo.datasource.config.HikariMySQLConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -32,20 +31,7 @@ public class MySQLDataSourceConfigure {
     @ConfigurationProperties("spring.datasource.mysql")
     public DataSource mysql() {
         DataSource dataSource = DataSourceBuilder.create().build();
-        HikariDataSource hikariDataSource = null;
-        if (dataSource instanceof HikariDataSource) {
-            // 连接池配置
-            hikariDataSource = (HikariDataSource) dataSource;
-            hikariDataSource.setPoolName(mysqlConfig.getPoolName());
-            hikariDataSource.setAutoCommit(mysqlConfig.isAutoCommit());
-            hikariDataSource.setConnectionTestQuery(mysqlConfig.getConnectionTestQuery());
-            hikariDataSource.setIdleTimeout(mysqlConfig.getIdleTimeout());
-            hikariDataSource.setConnectionTimeout(mysqlConfig.getConnectionTimeout());
-            hikariDataSource.setMaximumPoolSize(mysqlConfig.getMaximumPoolSize());
-            hikariDataSource.setMaxLifetime(mysqlConfig.getMaxLifetime());
-            hikariDataSource.setMinimumIdle(mysqlConfig.getMinimumIdle());
-        }
-        return hikariDataSource == null ? dataSource : hikariDataSource;
+        return mysqlConfig.injection(dataSource);
     }
 
     @Bean(name = "mysqlSqlSessionFactory")
