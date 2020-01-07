@@ -7,6 +7,8 @@
         <module>example-dynamic-datasource</module>
         <module>example-security</module>
         <module>example-h2</module>
+        <module>example-kafka</module>
+        <module>example-common</module>
     </modules>
 
     <parent>
