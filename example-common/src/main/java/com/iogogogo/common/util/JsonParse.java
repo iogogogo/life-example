@@ -41,6 +41,9 @@ public class JsonParse {
         return builder.create().fromJson(json, type);
     }
 
+    /**
+     * 处理LocalDate的序列化与反序列化
+     */
     final static class LocalDateAdapter implements JsonSerializer<LocalDate>, JsonDeserializer<LocalDate> {
 
         public JsonElement serialize(LocalDate date, Type typeOfSrc, JsonSerializationContext context) {
@@ -54,6 +57,9 @@ public class JsonParse {
         }
     }
 
+    /**
+     * 处理LocalDateTime序列化与反序列化
+     */
     final static class LocalDateTimeAdapter implements JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
 
         public JsonElement serialize(LocalDateTime date, Type typeOfSrc, JsonSerializationContext context) {
