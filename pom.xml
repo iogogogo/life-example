@@ -9,6 +9,7 @@
         <module>example-h2</module>
         <module>example-kafka</module>
         <module>example-common</module>
+        <module>example-redis</module>
     </modules>
 
     <parent>
