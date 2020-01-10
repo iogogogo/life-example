@@ -2,4 +2,4 @@
 
 - Blog Example
 
-[小花脸](https://iogogogo.github.io/)
+- [小花脸](https://iogogogo.github.io/)
