@@ -10,6 +10,8 @@
         <module>example-kafka</module>
         <module>example-common</module>
         <module>example-redis</module>
+        <module>example-mybatis-plus</module>
+        <module>example-aspect</module>
     </modules>
 
     <parent>

@@ -15,7 +15,7 @@ public class RedisHandler {
     private RedisTemplate redisTemplate;
 
     @Autowired
-    private RedisTemplate redisTemplateDB2;
+    private RedisTemplate redisTemplateDB_2;
 
     private RedisOperations redisOperations, redisDB2Operations;
 
@@ -28,7 +28,7 @@ public class RedisHandler {
 
     public RedisOperations redisDB2Operations() {
         if (redisDB2Operations == null) {
-            redisDB2Operations = new RedisOperations(redisTemplateDB2);
+            redisDB2Operations = new RedisOperations(redisTemplateDB_2);
         }
         return redisDB2Operations;
     }

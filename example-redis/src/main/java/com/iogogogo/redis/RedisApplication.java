@@ -20,7 +20,7 @@ public class RedisApplication implements CommandLineRunner {
     private RedisTemplate redisTemplate;
 
     @Autowired
-    private RedisTemplate redisTemplateDB2;
+    private RedisTemplate redisTemplateDB_2;
 
     @Autowired
     private RedisHandler redisHandler;
@@ -35,8 +35,8 @@ public class RedisApplication implements CommandLineRunner {
         redisTemplate.opsForValue().set("iogogogo", "redisTemplate save value");
 
 
-        log.info("redisTemplateDB2:{}", redisTemplateDB2);
-        redisTemplateDB2.opsForHash().put("iogogogo", "iogogogo-hash", "redisTemplateDB2 save value");
+        log.info("redisTemplateDB_2:{}", redisTemplateDB_2);
+        redisTemplateDB_2.opsForHash().put("iogogogo", "iogogogo-hash", "redisTemplateDB_2 save value");
 
 
         // 通过统一的RedisOperations对Redis进行操作

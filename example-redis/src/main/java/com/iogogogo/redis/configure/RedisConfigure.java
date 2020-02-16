@@ -27,33 +27,33 @@ import java.time.Duration;
 /**
  * Created by tao.zeng on 2020-01-10.
  *
- * @Value("${spring.redis-db2.database}") int database,
- * @Value("${spring.redis-db2.host}") String host,
- * @Value("${spring.redis-db2.port}") int port,
- * @Value("${spring.redis-db2.password}") String password,
- * @Value("${spring.redis-db2.timeout}") long timeout,
- * @Value("${spring.redis-db2.lettuce.pool.max-active}") int maxActive,
- * @Value("${spring.redis-db2.lettuce.pool.max-wait}") int maxWait,
- * @Value("${spring.redis-db2.lettuce.pool.max-idle}") int maxIdle,
- * @Value("${spring.redis-db2.lettuce.pool.min-idle}") int minIdle
+ * @Value("${spring.redis-db-2.database}") int database,
+ * @Value("${spring.redis-db-2.host}") String host,
+ * @Value("${spring.redis-db-2.port}") int port,
+ * @Value("${spring.redis-db-2.password}") String password,
+ * @Value("${spring.redis-db-2.timeout}") long timeout,
+ * @Value("${spring.redis-db-2.lettuce.pool.max-active}") int maxActive,
+ * @Value("${spring.redis-db-2.lettuce.pool.max-wait}") int maxWait,
+ * @Value("${spring.redis-db-2.lettuce.pool.max-idle}") int maxIdle,
+ * @Value("${spring.redis-db-2.lettuce.pool.min-idle}") int minIdle
  */
 @EnableCaching
 @Configuration
 public class RedisConfigure {
 
     @Bean
-    public RedisTemplate redisTemplateDB2(Tuple6<RedisStandaloneConfiguration, Long, Integer, Integer, Integer, Integer> redisConfigurationDB2) {
+    public RedisTemplate redisTemplateDB_2(Tuple6<RedisStandaloneConfiguration, Long, Integer, Integer, Integer, Integer> redisConfigurationDB_2) {
 
-        Long timeout = redisConfigurationDB2._2();
+        Long timeout = redisConfigurationDB_2._2();
 
-        int maxActive = redisConfigurationDB2._3(),
-                maxWait = redisConfigurationDB2._4(),
-                maxIdle = redisConfigurationDB2._5(),
-                minIdle = redisConfigurationDB2._6();
+        int maxActive = redisConfigurationDB_2._3(),
+                maxWait = redisConfigurationDB_2._4(),
+                maxIdle = redisConfigurationDB_2._5(),
+                minIdle = redisConfigurationDB_2._6();
 
 
         /* ========= 基本配置 ========= */
-        RedisStandaloneConfiguration standaloneConfiguration = redisConfigurationDB2._1();
+        RedisStandaloneConfiguration standaloneConfiguration = redisConfigurationDB_2._1();
 
 
         /* ========= 连接池通用配置 ========= */
@@ -159,15 +159,15 @@ public class RedisConfigure {
      */
     @Bean
     public Tuple6<RedisStandaloneConfiguration, Long, Integer, Integer, Integer, Integer>
-    redisConfigurationDB2(@Value("${spring.redis-db2.database}") int database,
-                          @Value("${spring.redis-db2.password}") String password,
-                          @Value("${spring.redis-db2.host}") String host,
-                          @Value("${spring.redis-db2.port}") int port,
-                          @Value("${spring.redis-db2.timeout}") long timeout,
-                          @Value("${spring.redis-db2.lettuce.pool.max-active}") int maxActive,
-                          @Value("${spring.redis-db2.lettuce.pool.max-wait}") int maxWait,
-                          @Value("${spring.redis-db2.lettuce.pool.max-idle}") int maxIdle,
-                          @Value("${spring.redis-db2.lettuce.pool.min-idle}") int minIdle) {
+    redisConfigurationDB_2(@Value("${spring.redis-db-2.database}") int database,
+                           @Value("${spring.redis-db-2.password}") String password,
+                           @Value("${spring.redis-db-2.host}") String host,
+                           @Value("${spring.redis-db-2.port}") int port,
+                           @Value("${spring.redis-db-2.timeout}") long timeout,
+                           @Value("${spring.redis-db-2.lettuce.pool.max-active}") int maxActive,
+                           @Value("${spring.redis-db-2.lettuce.pool.max-wait}") int maxWait,
+                           @Value("${spring.redis-db-2.lettuce.pool.max-idle}") int maxIdle,
+                           @Value("${spring.redis-db-2.lettuce.pool.min-idle}") int minIdle) {
 
         RedisStandaloneConfiguration standaloneConfiguration = new RedisStandaloneConfiguration();
         standaloneConfiguration.setDatabase(database);
