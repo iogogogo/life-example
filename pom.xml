@@ -12,6 +12,7 @@
         <module>example-redis</module>
         <module>example-mybatis-plus</module>
         <module>example-aspect</module>
+        <module>example-transaction</module>
     </modules>
 
     <parent>
